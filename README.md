@@ -7,4 +7,4 @@
 | Richard Alexander Acevedo Ramírez   | r.acevedor@uniandes.edu.co   | 
 | Oscar Arley Sanchez | oa.sanchez2@uniandes.edu.co |
 ## App Móvil Vinilos
-Aplicación móvil que permite 
+Aplicación móvil que permite buscar discos de vinilo d diferentes artistas en poder de coleccionistas
