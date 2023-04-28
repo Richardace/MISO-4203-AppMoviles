@@ -50,7 +50,7 @@
         android:layout_marginEnd="16dp"
         android:hint="Nombre del Artista"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.265"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/vynils_logo" />
@@ -83,17 +83,33 @@
         app:layout_constraintTop_toBottomOf="@+id/imagenArtista"
         app:srcCompat="@drawable/vynils_logo" />
 
+    <EditText
+        android:id="@+id/birthDateArtista"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:hint="BirthDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionArtista"
+        app:srcCompat="@drawable/vynils_logo" />
+
     <Button
         android:id="@+id/SaveArtistbutton"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="56dp"
         android:text="Continuar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcionArtista" />
+        app:layout_constraintTop_toBottomOf="@+id/birthDateArtista" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,7 +46,7 @@ class ArtistListView : AppCompatActivity() {
     }
     private fun fetchJsonData() {
         volleyBroker = VolleyBroker(this.applicationContext)
-        volleyBroker.instance.add(VolleyBroker.getRequest("bands",
+        volleyBroker.instance.add(VolleyBroker.getRequest("musicians",
             { response ->
                 Log.d("REQ", response)
                 val bands = Gson().fromJson(response, Array<Band>::class.java).toList()
