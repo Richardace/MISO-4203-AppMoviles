@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/SaveArtistbutton"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginStart="56dp"

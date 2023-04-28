@@ -1,5 +1,6 @@
 package com.moviles.vinilos
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,11 @@ class ArtistListView : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
+        }
+        val addArtistButton = findViewById<Button>(R.id.addartistbutton)
+        addArtistButton.setOnClickListener {
+            val intent = Intent(this, AddArtistActivity::class.java)
+            startActivity(intent)
         }
         // Initialize views
         recyclerView = findViewById(R.id.band_recycler_view)
