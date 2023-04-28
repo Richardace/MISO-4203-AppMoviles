@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArtistListView">
+    tools:context=".ui.ArtistListView">
 
     <TextView
         android:id="@+id/textView"
@@ -13,6 +13,8 @@
         android:layout_marginTop="35dp"
         android:text="Artistas"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/darkGray"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/backButton"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -30,12 +32,13 @@
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="12dp"
-        android:text="Atrás"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.062"
+        style="@style/CommonButtonStyle"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/arrow_left"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
@@ -51,10 +54,11 @@
 
     <Button
         android:id="@+id/addartistbutton"
+        style="@style/CommonButtonStyle"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginEnd="32dp"
-        android:text="+"
+        android:background="@drawable/add_sign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 

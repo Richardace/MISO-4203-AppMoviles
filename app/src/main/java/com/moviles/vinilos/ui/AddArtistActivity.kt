@@ -1,4 +1,4 @@
-package com.moviles.vinilos
+package com.moviles.vinilos.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.android.volley.Response
-import com.google.gson.Gson
+import com.moviles.vinilos.R
 import com.moviles.vinilos.brokers.VolleyBroker
 import org.json.JSONObject
 
@@ -15,7 +15,7 @@ class AddArtistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_artist)
-        val backButton = findViewById<Button>(R.id.backButton2)
+        val backButton = findViewById<Button>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
         }
