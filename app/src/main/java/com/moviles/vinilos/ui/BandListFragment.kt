@@ -5,26 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.moviles.vinilos.R
 import com.moviles.vinilos.databinding.FragmentBandListBinding
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.ui.adapters.BandAdapter
 import com.moviles.vinilos.viewmodels.BandVM
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BandListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BandListFragment : Fragment() {
     private var _binding: FragmentBandListBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +36,15 @@ class BandListFragment : Fragment() {
         _binding = FragmentBandListBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = BandAdapter()
+        val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)
+        addArtistButton.setOnClickListener {
+            val action = BandListFragmentDirections.actionBandListToAddArtistFragment()
+            view.findNavController().navigate(action)
+        }
+        val myButton = view.findViewById<Button>(R.id.backButton)
+        myButton.setOnClickListener {
+            view.findNavController().navigateUp()
+        }
         return view
     }
 
@@ -70,12 +72,13 @@ class BandListFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, BandVM.Factory(activity.application)).get(BandVM::class.java)
+        viewModel = ViewModelProvider(this, BandVM.Factory(activity.application))[BandVM::class.java]
         viewModel.bands.observe(viewLifecycleOwner, Observer<List<BandModel>> {
             it.apply {
                 viewModelAdapter!!.bands = this
             }
         })
+
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })

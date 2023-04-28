@@ -9,7 +9,11 @@
         android:id="@+id/bandList"
         android:name="com.moviles.vinilos.ui.BandListFragment"
         android:label="fragment_band_list"
-        tools:layout="@layout/fragment_band_list" />
+        tools:layout="@layout/fragment_band_list" >
+        <action
+            android:id="@+id/action_bandList_to_addArtistFragment"
+            app:destination="@id/addArtistFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.moviles.vinilos.ui.HomeFragment"
@@ -28,4 +32,9 @@
             android:id="@+id/action_visitorFragment_to_bandList"
             app:destination="@id/bandList" />
     </fragment>
+    <fragment
+        android:id="@+id/addArtistFragment"
+        android:name="com.moviles.vinilos.ui.AddArtistFragment"
+        android:label="fragment_add_artist"
+        tools:layout="@layout/fragment_add_artist" />
 </navigation>
