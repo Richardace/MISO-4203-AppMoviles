@@ -51,7 +51,7 @@ class BandListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = BandAdapter()
+        recyclerView.adapter = viewModelAdapter
 
     }
 

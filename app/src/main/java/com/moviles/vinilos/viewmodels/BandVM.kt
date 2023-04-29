@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
-import com.moviles.vinilos.brokers.VolleyBroker
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.repository.BandRepository
 

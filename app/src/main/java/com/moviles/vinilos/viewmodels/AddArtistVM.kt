@@ -2,20 +2,15 @@ package com.moviles.vinilos.viewmodels
 
 import android.app.Application
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.Response
-import com.google.gson.Gson
-import com.moviles.vinilos.R
-import com.moviles.vinilos.brokers.VolleyBroker
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.repository.BandRepository
-import com.moviles.vinilos.ui.BandListFragment
 import org.json.JSONObject
 
 class AddArtistVM(application: Application) : AndroidViewModel(application) {
@@ -29,8 +24,10 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
     val descriptionLD = MutableLiveData<String>();
     val birthdateLD = MutableLiveData<String>();
     private val bandRepository = BandRepository(application)
-
-    init {}
+    private var bandsList = emptyList<BandModel>()
+    init {
+        refreshDataFromNetwork()
+    }
 
     fun saveArtistOnApi() {
 
@@ -82,13 +79,25 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
     }
 
     private fun checkNameCreated(name: String): Boolean {
-        return false
-        val bandVM = ViewModelProvider(getApplication())[BandVM::class.java]
-        return bandVM.bands.value?.map { it.name }?.contains(name) ?: false
+        var valor = false
+        valor = bandsList.map { it2 -> it2.name }.contains(name)
+
+        return  valor;
     }
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+    }
+
+    private fun refreshDataFromNetwork() {
+        bandRepository.getData({
+            bandsList = it
+            _eventNetworkError.value = false
+            _isNetworkErrorShown.value = false
+        },{
+            Log.d("ER", it.message.toString());
+            _eventNetworkError.value = true
+        })
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

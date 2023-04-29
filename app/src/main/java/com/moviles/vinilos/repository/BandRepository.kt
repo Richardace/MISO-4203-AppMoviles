@@ -3,8 +3,6 @@ package com.moviles.vinilos.repository
 import android.app.Application
 import android.util.Log
 import com.android.volley.VolleyError
-import com.google.gson.Gson
-import com.moviles.vinilos.brokers.VolleyBroker
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.network.NetworkServiceAdapter
 import org.json.JSONObject
