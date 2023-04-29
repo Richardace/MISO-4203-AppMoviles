@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/bandList"
+        android:name="com.moviles.vinilos.ui.BandListFragment"
+        android:label="fragment_band_list"
+        tools:layout="@layout/fragment_band_list" >
+        <action
+            android:id="@+id/action_bandList_to_addArtistFragment"
+            app:destination="@id/addArtistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.moviles.vinilos.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_visitorFragment"
+            app:destination="@id/visitorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/visitorFragment"
+        android:name="com.moviles.vinilos.ui.VisitorFragment"
+        android:label="fragment_visitor"
+        tools:layout="@layout/fragment_visitor" >
+        <action
+            android:id="@+id/action_visitorFragment_to_bandList"
+            app:destination="@id/bandList" />
+    </fragment>
+    <fragment
+        android:id="@+id/addArtistFragment"
+        android:name="com.moviles.vinilos.ui.AddArtistFragment"
+        android:label="fragment_add_artist"
+        tools:layout="@layout/fragment_add_artist" />
+</navigation>
