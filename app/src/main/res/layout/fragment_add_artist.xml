@@ -62,23 +62,23 @@ tools:context=".ui.AddArtistFragment">
     app:layout_constraintTop_toBottomOf="@+id/textView"
     app:srcCompat="@drawable/vynils_logo" />
 
-<EditText
-    android:id="@+id/imagenArtista"
-    android:layout_width="0dp"
-    android:layout_height="50dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="30dp"
-    android:layout_marginEnd="16dp"
-    android:background="@drawable/common_form_field"
-    android:hint="Imagen"
-    android:paddingStart="24dp"
-    android:textColor="@color/gray"
-    android:textSize="16sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/nombreArtista"
-    app:srcCompat="@drawable/vynils_logo" />
+    <EditText
+        android:id="@+id/imagenArtista"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/common_form_field"
+        android:hint="Url Imagen"
+        android:paddingStart="24dp"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreArtista"
+        app:srcCompat="@drawable/vynils_logo" />
 
 <EditText
     android:id="@+id/descripcionArtista"
@@ -106,7 +106,7 @@ tools:context=".ui.AddArtistFragment">
     android:layout_marginTop="30dp"
     android:layout_marginEnd="16dp"
     android:background="@drawable/common_form_field"
-    android:hint="BirthDate"
+    android:hint="Fecha Nacimiento YYYY/MM/DD"
     android:paddingStart="24dp"
     android:textColor="@color/gray"
     android:textSize="16sp"
