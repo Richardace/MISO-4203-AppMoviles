@@ -75,12 +75,14 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
                 _isNetworkErrorShown.value = false
 
             }, {
+                Log.d("ER", it.message.toString());
                 _eventNetworkError.value = true
             })
         }
     }
 
     private fun checkNameCreated(name: String): Boolean {
+        return false
         val bandVM = ViewModelProvider(getApplication())[BandVM::class.java]
         return bandVM.bands.value?.map { it.name }?.contains(name) ?: false
     }

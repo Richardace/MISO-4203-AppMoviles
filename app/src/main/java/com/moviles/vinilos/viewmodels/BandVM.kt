@@ -33,6 +33,7 @@ class BandVM (application: Application) :  AndroidViewModel(application) {
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
         },{
+            Log.d("ER", it.message.toString());
             _eventNetworkError.value = true
         })
     }
