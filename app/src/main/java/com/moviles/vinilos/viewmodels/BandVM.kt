@@ -10,37 +10,31 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moviles.vinilos.brokers.VolleyBroker
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.repository.BandRepository
 
 class BandVM (application: Application) :  AndroidViewModel(application) {
 
     private val _bands = MutableLiveData<List<BandModel>>()
 
-    val bands: LiveData<List<BandModel>>
-        get() = _bands
-
+    val bands: LiveData<List<BandModel>> get() = _bands
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
+    val bandsRepository = BandRepository(application)
 
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        VolleyBroker(getApplication()).instance.add(
-            VolleyBroker.getRequest("musicians",
-            { response ->
-                val bands = Gson().fromJson(response, Array<BandModel>::class.java).toList()
-                _bands.postValue(bands)
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-            },
-            {
-                Log.d("TAG", it.toString())
-                _eventNetworkError.value = true
-            }
-        ))
+    bandsRepository.getData({
+        _bands.postValue(it)
+            _eventNetworkError.value = false
+            _isNetworkErrorShown.value = false
+        },{
+            _eventNetworkError.value = true
+        })
     }
 
     fun onNetworkErrorShown() {

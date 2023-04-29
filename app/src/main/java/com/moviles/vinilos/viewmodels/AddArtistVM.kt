@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import com.moviles.vinilos.R
 import com.moviles.vinilos.brokers.VolleyBroker
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.repository.BandRepository
 import org.json.JSONObject
 
 class AddArtistVM  (application: Application) :  AndroidViewModel(application) {
@@ -26,18 +27,18 @@ class AddArtistVM  (application: Application) :  AndroidViewModel(application) {
     val imageLD = MutableLiveData<String>();
     val descriptionLD = MutableLiveData<String>();
     val birthdateLD = MutableLiveData<String>();
-
-    init {
-
-    }
+    private val bandRepository = BandRepository(application)
+    init {}
 
      fun saveArtistOnApi() {
+
          var canCallApi = false
         val jsonObject = JSONObject()
         jsonObject.put("name", nameLD.value)
         jsonObject.put("image", imageLD.value)
         jsonObject.put("description", descriptionLD.value)
         jsonObject.put("birthDate", birthdateLD.value)
+
          if(nameLD.value?.isEmpty() != false){
              Toast.makeText(getApplication(), "Campo Nombre vacío", Toast.LENGTH_LONG).show();
          }else {
@@ -64,17 +65,18 @@ class AddArtistVM  (application: Application) :  AndroidViewModel(application) {
              }
          }
          if (canCallApi){
-             VolleyBroker(getApplication()).instance.add(
-                 VolleyBroker.postRequest("musicians", jsonObject,
-                     Response.Listener<JSONObject> { response ->
-                         Log.d("REQ", response.toString())
+             bandRepository.createBand(jsonObject,{
+                 Toast.makeText(
+                     getApplication(),
+                     "Artista creado con exito",
+                     android.widget.Toast.LENGTH_LONG
+                 ).show();
+                 _eventNetworkError.value = false
+                 _isNetworkErrorShown.value = false
 
-                     },
-                     Response.ErrorListener
-                     {
-                         Log.d("TAG", it.toString())
-                     }
-                 ))
+             },{
+                 _eventNetworkError.value = true
+             })
          }
     }
 
