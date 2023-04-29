@@ -13,7 +13,8 @@ class BandRepository (val application: Application){
 
     fun getData(callback: (List<BandModel>)->Unit, onError: (VolleyError)->Unit) {
         NetworkServiceAdapter.getInstance(application).getBands({
-            callback(it)
+            val orderedList = it.sortedBy { bandModel ->  bandModel.name}
+            callback(orderedList)
         },
             onError
         )
