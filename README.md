@@ -33,11 +33,6 @@ Si nos aparece este mensaje damos clic en "this windows"
 
 ![image](https://user-images.githubusercontent.com/111307672/235332004-81e89ae5-8a7c-4b4d-8f00-c384b850d696.png)
 
-
-
-![image](https://user-images.githubusercontent.com/111307672/235332415-340a3f1e-287e-4745-9e78-138a25270013.png)
-
-
 Listo ahora, luego que el proyecto cargue correctamente sincronizar el Gradle, para esto hubicamos el icono en la parte superior izquierto "Sync Project with Glade File". Esto descargara los paquetes necesarios.
 
 ![image](https://user-images.githubusercontent.com/111307672/235332284-53d16c73-5a2c-4f4b-9ca7-1a9c58075d7e.png)
@@ -48,10 +43,14 @@ Ahora nos dirigimos al menu "Build" luego "Build Bundle(s) / Apk(s)" / Build Apk
 
 ![image](https://user-images.githubusercontent.com/111307672/235332344-78a097cb-8fa5-41c6-aa4d-ae2f8b7ad809.png)
 
+El proceso empezara ha generarse u podemos ver el detalle ingresando el menu "Build"
+![image](https://user-images.githubusercontent.com/111307672/235332415-340a3f1e-287e-4745-9e78-138a25270013.png)
 
 Al termimar el proceso, nos aparecera un mensaje en el que podemos acceder a la ruta donde quedo nuestro apk dando clic en "locale" 
 ![image](https://user-images.githubusercontent.com/111307672/235332475-a742d061-c0e0-4fe1-9ead-64f97f5ea1de.png)
 
+Al abrir el directorio encontramos nuestra apk lista para compartrla a los telefonos donde se desee instalar.
+![image](https://user-images.githubusercontent.com/111307672/235332626-26d83218-319a-44d5-8e9b-541543856c3f.png)
 
 
 
