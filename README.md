@@ -33,5 +33,20 @@ Si nos aparece este mensaje damos clic en "this windows"
 
 ![image](https://user-images.githubusercontent.com/111307672/235332004-81e89ae5-8a7c-4b4d-8f00-c384b850d696.png)
 
+Listo ahora, luego que el proyecto cargue correctamente sincronizar el Gradle, para esto hubicamos el icono en la parte superior izquierto "Sync Project with Glade File". Esto descargara los paquetes necesarios.
+
+![image](https://user-images.githubusercontent.com/111307672/235332284-53d16c73-5a2c-4f4b-9ca7-1a9c58075d7e.png)
+
+![image](https://user-images.githubusercontent.com/111307672/235332311-8bf055c7-9b00-45aa-8df1-7f17939c1278.png)
+
+Ahora nos dirigimos al menu "Build" luego "Build Bundle(s) / Apk(s)" / Build Apk(s)
+
+![image](https://user-images.githubusercontent.com/111307672/235332344-78a097cb-8fa5-41c6-aa4d-ae2f8b7ad809.png)
+
+
+
+
+
+
 
 
