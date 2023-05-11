@@ -2,13 +2,12 @@ package com.moviles.vinilos.viewmodels
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.repository.BandRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BandVM (application: Application) :  AndroidViewModel(application) {
 
@@ -26,14 +25,18 @@ class BandVM (application: Application) :  AndroidViewModel(application) {
     }
 
     private fun refreshDataFromNetwork() {
-    bandsRepository.getData({
-        _bands.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        },{
-            Log.d("ER", it.message.toString());
+        try{
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO){
+                    var data = bandsRepository.getData()
+                    _bands.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }catch (e:Exception){
             _eventNetworkError.value = true
-        })
+        }
     }
 
     fun onNetworkErrorShown() {
