@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CollectorModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -60,5 +61,17 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
     private fun putRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
         return  JsonObjectRequest(Request.Method.PUT, BASE_URL+path, body, responseListener, errorListener)
+    }
+
+    fun getCollectors(onComplete:(resp:List<CollectorModel>)->Unit, onError: (error:VolleyError)->Unit){
+        requestQueue.add(getRequest("collectors",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<CollectorModel>::class.java).toList()
+                onComplete(list)
+            },
+            Response.ErrorListener {
+                onError(it)
+            }))
     }
 }
