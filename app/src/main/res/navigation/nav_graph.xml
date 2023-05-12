@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_visitorFragment"
             app:destination="@id/visitorFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_collectorListFragment"
+            app:destination="@id/collectorListFragment" />
     </fragment>
     <fragment
         android:id="@+id/visitorFragment"
@@ -37,4 +40,9 @@
         android:name="com.moviles.vinilos.ui.AddArtistFragment"
         android:label="fragment_add_artist"
         tools:layout="@layout/fragment_add_artist" />
+    <fragment
+        android:id="@+id/collectorListFragment"
+        android:name="com.moviles.vinilos.ui.CollectorListFragment"
+        android:label="fragment_collector_list"
+        tools:layout="@layout/fragment_collector_list" />
 </navigation>
