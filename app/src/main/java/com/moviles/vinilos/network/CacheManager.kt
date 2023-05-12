@@ -2,6 +2,7 @@ package com.moviles.vinilos.network
 
 import android.content.Context
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CollectorModel
 
 class CacheManager(context: Context) {
     companion object{
@@ -14,7 +15,7 @@ class CacheManager(context: Context) {
             }
     }
     private var bands: HashMap<String, List<BandModel>> = hashMapOf()
-
+    private var collectors: HashMap<String, List<CollectorModel>> = hashMapOf()
     fun addBands(nameList: String, band: List<BandModel>){
         if (!bands.containsKey(nameList)){
             bands[nameList] = band
@@ -22,5 +23,14 @@ class CacheManager(context: Context) {
     }
     fun getBands(nameList: String) : List<BandModel>{
         return if (bands.containsKey(nameList)) bands[nameList]!! else listOf<BandModel>()
+    }
+
+    fun addCollectors(nameList: String, collector: List<CollectorModel>){
+        if (!collectors.containsKey(nameList)){
+            collectors[nameList] = collector
+        }
+    }
+    fun getCollectors(nameList: String): List<CollectorModel>{
+        return  if (collectors.containsKey(nameList)) collectors[nameList]!! else listOf<CollectorModel>()
     }
 }

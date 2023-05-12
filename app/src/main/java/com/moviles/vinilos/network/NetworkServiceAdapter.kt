@@ -66,15 +66,15 @@ class NetworkServiceAdapter constructor(context: Context) {
         return  JsonObjectRequest(Request.Method.PUT, BASE_URL+path, body, responseListener, errorListener)
     }
 
-    fun getCollectors(onComplete:(resp:List<CollectorModel>)->Unit, onError: (error:VolleyError)->Unit){
+   suspend fun getCollectors() = suspendCoroutine<List<CollectorModel>>{ cont->
         requestQueue.add(getRequest("collectors",
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = Gson().fromJson(response, Array<CollectorModel>::class.java).toList()
-                onComplete(list)
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
+                cont.resumeWithException(it)
             }))
     }
 }
