@@ -34,15 +34,27 @@
         <action
             android:id="@+id/action_visitorFragment_to_bandList"
             app:destination="@id/bandList" />
+        <action
+            android:id="@+id/fragment_catalogo_album"
+            app:destination="@id/catalogoAlbumFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addArtistFragment"
         android:name="com.moviles.vinilos.ui.AddArtistFragment"
         android:label="fragment_add_artist"
         tools:layout="@layout/fragment_add_artist" />
+
+
     <fragment
         android:id="@+id/collectorListFragment"
         android:name="com.moviles.vinilos.ui.CollectorListFragment"
         android:label="fragment_collector_list"
         tools:layout="@layout/fragment_collector_list" />
+
+    <fragment
+        android:id="@+id/catalogoAlbumFragment"
+        android:name="com.moviles.vinilos.ui.CatalogoAlbumFragment"
+        android:label="fragment_catalogo_album"
+        tools:layout="@layout/fragment_catalogo_album" />
 </navigation>

@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
+import com.moviles.vinilos.databinding.FragmentCatalogoAlbumBinding
 import com.moviles.vinilos.databinding.FragmentCollectorListBinding
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.ui.adapters.CatalogoAdapter
@@ -21,7 +22,7 @@ import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
 
 
 class CatalogoAlbumFragment : Fragment() {
-    private var _binding: FragmentCollectorListBinding? = null
+    private var _binding: FragmentCatalogoAlbumBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: CatalogoAlbumVM
@@ -35,7 +36,7 @@ class CatalogoAlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCollectorListBinding.inflate(inflater, container, false)
+        _binding = FragmentCatalogoAlbumBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = CatalogoAdapter()
         val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)

@@ -6,18 +6,20 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.moviles.vinilos.R
+import com.moviles.vinilos.databinding.AlbumRowBinding
 import com.moviles.vinilos.databinding.CollectorRowBinding
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CatalogoAlbumModel
 
-class CatalogoViewHolder(val viewDataBinding: CollectorRowBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
+class CatalogoViewHolder(val viewDataBinding: AlbumRowBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
     companion object {
         @LayoutRes
-        val LAYOUT = R.layout.collector_row
+        val LAYOUT = R.layout.album_row
     }
 
-    private val nameTextView: TextView = itemView.findViewById(R.id.bandTitle)
-    private val imageImageView: ImageView = itemView.findViewById(R.id.bandImage)
-    fun bind(band: BandModel) {
+    private val nameTextView: TextView = itemView.findViewById(R.id.albumTitle)
+    private val imageImageView: ImageView = itemView.findViewById(R.id.albumImage)
+    fun bind(band: CatalogoAlbumModel) {
         nameTextView.text = band.name
         Glide.with(itemView)
             .load(band.image)

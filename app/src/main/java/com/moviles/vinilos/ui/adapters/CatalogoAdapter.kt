@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.moviles.vinilos.databinding.AlbumRowBinding
 import com.moviles.vinilos.databinding.CollectorRowBinding
 import com.moviles.vinilos.models.CatalogoAlbumModel
 
@@ -14,7 +15,7 @@ class CatalogoAdapter : RecyclerView.Adapter<CatalogoViewHolder>() {
             notifyDataSetChanged()
         }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder  {
-        val withDataBinding: CollectorRowBinding = DataBindingUtil.inflate(
+        val withDataBinding: AlbumRowBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             CatalogoViewHolder.LAYOUT,
             parent,
@@ -24,7 +25,7 @@ class CatalogoAdapter : RecyclerView.Adapter<CatalogoViewHolder>() {
 
     override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            //it.catalogo = catalogos[position]
+            it.album = catalogos[position]
         }
         holder.viewDataBinding.root.setOnClickListener {
         }
