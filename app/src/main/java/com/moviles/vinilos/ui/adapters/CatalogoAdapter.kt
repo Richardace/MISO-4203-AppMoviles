@@ -5,32 +5,32 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.databinding.CollectorRowBinding
-import com.moviles.vinilos.models.CollectorModel
+import com.moviles.vinilos.models.CatalogoAlbumModel
 
-class CatalogoAdapter : RecyclerView.Adapter<CollectorViewHolder>() {
-    var collectors :List<CollectorModel> = emptyList()
+class CatalogoAdapter : RecyclerView.Adapter<CatalogoViewHolder>() {
+    var catalogos :List<CatalogoAlbumModel> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectorViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder  {
         val withDataBinding: CollectorRowBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            CollectorViewHolder.LAYOUT,
+            CatalogoViewHolder.LAYOUT,
             parent,
             false)
-        return CollectorViewHolder(withDataBinding)
+        return CatalogoViewHolder(withDataBinding)
     }
 
-    override fun onBindViewHolder(holder: CollectorViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            it.collector = collectors[position]
+            //it.catalogo = catalogos[position]
         }
         holder.viewDataBinding.root.setOnClickListener {
         }
     }
 
     override fun getItemCount(): Int {
-        return collectors.size
+        return catalogos.size
     }
 }

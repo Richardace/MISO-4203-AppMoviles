@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
 import com.moviles.vinilos.databinding.FragmentCollectorListBinding
+import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.ui.adapters.CatalogoAdapter
-import com.moviles.vinilos.ui.adapters.CollectorAdapter
 import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
-import com.moviles.vinilos.viewmodels.CollectorVM
+
 
 
 class CatalogoAlbumFragment : Fragment() {
