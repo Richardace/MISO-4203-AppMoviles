@@ -14,10 +14,17 @@ class VisitorFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_visitor, container, false)
         val myButton = view.findViewById<Button>(R.id.artistButton)
+        val myButtonAlbum = view.findViewById<Button>(R.id.AlbumButton)
 
         myButton.setOnClickListener {
             // Toast.makeText(activity, "Button Clicked", Toast.LENGTH_SHORT).show()
             val action = VisitorFragmentDirections.actionVisitorFragmentToBandList()
+            view.findNavController().navigate(action)
+        }
+
+        myButtonAlbum.setOnClickListener {
+            // Toast.makeText(activity, "Button Clicked", Toast.LENGTH_SHORT).show()
+            val action = VisitorFragmentDirections.fragmentCatalogoAlbum()
             view.findNavController().navigate(action)
         }
 
