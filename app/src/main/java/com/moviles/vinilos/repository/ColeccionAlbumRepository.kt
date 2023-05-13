@@ -10,13 +10,8 @@ import org.json.JSONObject
 
 class ColeccionAlbumRepository (val application: Application){
 
-    fun getData(callback: (List<ColeccionAlbumModel>)->Unit, onError: (VolleyError)->Unit) {
-        NetworkServiceAdapter.getInstance(application).getColeccionAlbum({
-            val orderedList = it.sortedBy { bandModel ->  bandModel.album.name}
-            callback(orderedList)
-        },
-            onError
-        )
+   suspend fun getData() : List<ColeccionAlbumModel> {
+        return NetworkServiceAdapter.getInstance(application).getColeccionAlbum()
     }
 
     fun createColeccionAlbum(data: JSONObject, idAlbum:Int, callback: (JSONObject)->Unit, onError: (VolleyError)->Unit) {

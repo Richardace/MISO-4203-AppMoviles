@@ -59,14 +59,19 @@ class AddCollectionAlbumVM(application: Application) : AndroidViewModel(applicat
     }
 
     private fun refreshDataFromNetwork() {
-        coleccionRepository.getData({
-            _catalogos.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        }, {
-            Log.d("ER", it.message.toString());
+        try {
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO){
+                    var data = coleccionRepository.getData()
+                    _catalogos.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+
+        }catch (e:Exception){
             _eventNetworkError.value = true
-        })
+        }
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
