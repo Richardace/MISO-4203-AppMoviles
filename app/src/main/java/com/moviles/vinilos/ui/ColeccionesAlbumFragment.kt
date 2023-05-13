@@ -14,20 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
 import com.moviles.vinilos.databinding.FragmentCatalogoAlbumBinding
-import com.moviles.vinilos.databinding.FragmentCollectorListBinding
+import com.moviles.vinilos.databinding.FragmentCollectorAlbumListBinding
 import com.moviles.vinilos.models.CatalogoAlbumModel
+import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.ui.adapters.CatalogoAdapter
-import com.moviles.vinilos.ui.adapters.tapped
+import com.moviles.vinilos.ui.adapters.CollectorAlbumAdapter
 import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
+import com.moviles.vinilos.viewmodels.CollectorAlbumVM
 
 
-
-class CatalogoAlbumFragment : Fragment(), tapped {
-    private var _binding: FragmentCatalogoAlbumBinding? = null
+class ColeccionesAlbumFragment : Fragment() {
+    private var _binding: FragmentCollectorAlbumListBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: CatalogoAlbumVM
-    private var viewModelAdapter: CatalogoAdapter? = null
+    private lateinit var viewModel: CollectorAlbumVM
+    private var viewModelAdapter: CollectorAlbumAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +38,13 @@ class CatalogoAlbumFragment : Fragment(), tapped {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCatalogoAlbumBinding.inflate(inflater, container, false)
+        _binding = FragmentCollectorAlbumListBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = CatalogoAdapter(callback = this)
-        val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)
-        addArtistButton.setOnClickListener {
-
+        viewModelAdapter = CollectorAlbumAdapter()
+        val addAlbumColeccion = view.findViewById<Button>(R.id.addalbumcoleccion)
+        addAlbumColeccion.setOnClickListener {
+            val action = ColeccionesAlbumFragmentDirections.fragmentAddAlbum()
+            view.findNavController().navigate(action)
         }
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {
@@ -75,8 +77,8 @@ class CatalogoAlbumFragment : Fragment(), tapped {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, CatalogoAlbumVM.Factory(activity.application))[CatalogoAlbumVM::class.java]
-        viewModel.catalogos.observe(viewLifecycleOwner, Observer<List<CatalogoAlbumModel>> {
+        viewModel = ViewModelProvider(this, CollectorAlbumVM.Factory(activity.application))[CollectorAlbumVM::class.java]
+        viewModel.catalogos.observe(viewLifecycleOwner, Observer<List<ColeccionAlbumModel>> {
             it.apply {
                 viewModelAdapter!!.catalogos = this
             }
@@ -85,8 +87,5 @@ class CatalogoAlbumFragment : Fragment(), tapped {
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
-    }
-
-    override fun onItemtapped(catalogo: CatalogoAlbumModel) {
     }
 }

@@ -21,7 +21,7 @@ class HomeFragment : Fragment() {
 
         val collectorButton = view.findViewById<Button>(R.id.SaveArtistbutton)
         collectorButton.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToCollectorListFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToCollectorAlbumListFragment()
             view.findNavController().navigate(action)
         }
 

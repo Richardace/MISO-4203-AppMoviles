@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
+import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.models.CollectorModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -85,6 +86,30 @@ class NetworkServiceAdapter constructor(context: Context) {
                 val resp = JSONArray(response)
                 val list = Gson().fromJson(response, Array<CatalogoAlbumModel>::class.java).toList()
                 onComplete(list)
+            },
+            Response.ErrorListener {
+                onError(it)
+            }))
+    }
+
+    fun getColeccionAlbum(onComplete:(resp:List<ColeccionAlbumModel>)->Unit, onError: (error:VolleyError)->Unit){
+        requestQueue.add(getRequest("collectors/5/albums",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<ColeccionAlbumModel>::class.java).toList()
+                System.out.println(list)
+                onComplete(list)
+            },
+            Response.ErrorListener {
+                onError(it)
+            }))
+    }
+
+    fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
+            body,
+            Response.Listener<JSONObject> { response ->
+                onComplete(response)
             },
             Response.ErrorListener {
                 onError(it)

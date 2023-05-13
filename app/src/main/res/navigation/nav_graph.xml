@@ -23,8 +23,8 @@
             android:id="@+id/action_homeFragment_to_visitorFragment"
             app:destination="@id/visitorFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_collectorListFragment"
-            app:destination="@id/collectorListFragment" />
+            android:id="@+id/action_homeFragment_to_collectorAlbumListFragment"
+            app:destination="@id/catalogoColeccionesAlbumFragment" />
     </fragment>
     <fragment
         android:id="@+id/visitorFragment"
@@ -57,4 +57,20 @@
         android:name="com.moviles.vinilos.ui.CatalogoAlbumFragment"
         android:label="fragment_catalogo_album"
         tools:layout="@layout/fragment_catalogo_album" />
+    <fragment
+        android:id="@+id/catalogoColeccionesAlbumFragment"
+        android:name="com.moviles.vinilos.ui.ColeccionesAlbumFragment"
+        android:label="CatalogoColeccionesAlbumFragment">
+        <action
+            android:id="@+id/fragment_add_album"
+            app:destination="@id/addAlbumCollectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAlbumCollectionFragment"
+        android:name="com.moviles.vinilos.ui.AddAlbumCollectionFragment"
+        android:label="AddAlbumCollectionFragment">
+    <action
+        android:id="@+id/action_homeFragment_to_collectorAlbumListFragment"
+        app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
