@@ -15,6 +15,7 @@ class VisitorFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_visitor, container, false)
         val myButton = view.findViewById<Button>(R.id.artistButton)
         val myButtonAlbum = view.findViewById<Button>(R.id.AlbumButton)
+        val collectorButton = view.findViewById<Button>(R.id.collectorButton)
 
         myButton.setOnClickListener {
             // Toast.makeText(activity, "Button Clicked", Toast.LENGTH_SHORT).show()
@@ -25,6 +26,11 @@ class VisitorFragment : Fragment() {
         myButtonAlbum.setOnClickListener {
             // Toast.makeText(activity, "Button Clicked", Toast.LENGTH_SHORT).show()
             val action = VisitorFragmentDirections.fragmentCatalogoAlbum()
+            view.findNavController().navigate(action)
+        }
+
+        collectorButton.setOnClickListener {
+            val action = VisitorFragmentDirections.actionVisitorFragmentToCollectorListFragment()
             view.findNavController().navigate(action)
         }
 

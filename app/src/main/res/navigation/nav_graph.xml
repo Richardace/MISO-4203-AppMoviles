@@ -37,6 +37,9 @@
         <action
             android:id="@+id/fragment_catalogo_album"
             app:destination="@id/catalogoAlbumFragment" />
+        <action
+            android:id="@+id/action_visitorFragment_to_collectorListFragment"
+            app:destination="@id/collectorListFragment" />
     </fragment>
 
     <fragment
