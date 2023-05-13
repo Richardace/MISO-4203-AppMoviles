@@ -41,10 +41,7 @@ class CollectorListFragment : Fragment() {
         _binding = FragmentCollectorListBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = CollectorAdapter()
-        val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)
-        addArtistButton.setOnClickListener {
 
-        }
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {
             view.findNavController().navigateUp()
