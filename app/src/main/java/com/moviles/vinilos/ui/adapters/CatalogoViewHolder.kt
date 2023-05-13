@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.moviles.vinilos.R
 import com.moviles.vinilos.databinding.AlbumRowBinding
-import com.moviles.vinilos.databinding.CollectorRowBinding
-import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 
 class CatalogoViewHolder(val viewDataBinding: AlbumRowBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -19,10 +17,10 @@ class CatalogoViewHolder(val viewDataBinding: AlbumRowBinding) : RecyclerView.Vi
 
     private val nameTextView: TextView = itemView.findViewById(R.id.albumTitle)
     private val imageImageView: ImageView = itemView.findViewById(R.id.albumImage)
-    fun bind(band: CatalogoAlbumModel) {
-        nameTextView.text = band.name
+    fun bind(album: CatalogoAlbumModel) {
+        nameTextView.text = album.name
         Glide.with(itemView)
-            .load(band.image)
+            .load(album.image)
             .placeholder(R.drawable.ic_launcher_background)
             .error(R.drawable.ic_launcher_background)
             .into(imageImageView)
