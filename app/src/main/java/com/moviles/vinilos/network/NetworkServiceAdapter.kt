@@ -80,28 +80,27 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    fun getCatalogoAlbum(onComplete:(resp:List<CatalogoAlbumModel>)->Unit, onError: (error:VolleyError)->Unit){
+   suspend fun getCatalogoAlbum() = suspendCoroutine<List<CatalogoAlbumModel>>{ cont->
         requestQueue.add(getRequest("albums",
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = Gson().fromJson(response, Array<CatalogoAlbumModel>::class.java).toList()
-                onComplete(list)
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
+                cont.resumeWithException(it)
             }))
     }
 
-    fun getColeccionAlbum(onComplete:(resp:List<ColeccionAlbumModel>)->Unit, onError: (error:VolleyError)->Unit){
-        requestQueue.add(getRequest("collectors/5/albums",
+   suspend fun getColeccionAlbum() = suspendCoroutine<List<ColeccionAlbumModel>>{ cont->
+       requestQueue.add(getRequest("collectors/5/albums",
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = Gson().fromJson(response, Array<ColeccionAlbumModel>::class.java).toList()
-                System.out.println(list)
-                onComplete(list)
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
+                cont.resumeWithException(it)
             }))
     }
 
