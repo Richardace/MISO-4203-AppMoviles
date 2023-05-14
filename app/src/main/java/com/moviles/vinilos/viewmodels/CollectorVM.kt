@@ -4,32 +4,34 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CollectorModel
 import com.moviles.vinilos.repository.BandRepository
+import com.moviles.vinilos.repository.CollectorRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BandVM (application: Application) :  AndroidViewModel(application) {
+class CollectorVM(application: Application) :  AndroidViewModel(application) {
 
-    private val _bands = MutableLiveData<List<BandModel>>()
+    private val _collectors = MutableLiveData<List<CollectorModel>>()
 
-    val bands: LiveData<List<BandModel>> get() = _bands
+    val collectors: LiveData<List<CollectorModel>> get() = _collectors
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
-    val bandsRepository = BandRepository(application)
+    val collectorRepository = CollectorRepository(application)
 
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        try{
+        try {
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    var data = bandsRepository.getData()
-                    _bands.postValue(data)
+                    var data = collectorRepository.getData()
+                    _collectors.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
@@ -45,9 +47,9 @@ class BandVM (application: Application) :  AndroidViewModel(application) {
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(BandVM::class.java)) {
+            if (modelClass.isAssignableFrom(CollectorVM::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return BandVM(app) as T
+                return CollectorVM(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

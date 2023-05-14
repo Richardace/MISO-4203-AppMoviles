@@ -11,8 +11,14 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CatalogoAlbumModel
+import com.moviles.vinilos.models.ColeccionAlbumModel
+import com.moviles.vinilos.models.CollectorModel
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object{
@@ -30,15 +36,15 @@ class NetworkServiceAdapter constructor(context: Context) {
         Volley.newRequestQueue(context.applicationContext)
     }
 
-    fun getBands(onComplete:(resp:List<BandModel>)->Unit, onError: (error:VolleyError)->Unit){
+    suspend  fun getBands() = suspendCoroutine<List<BandModel>> { cont->
         requestQueue.add(getRequest("musicians",
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = Gson().fromJson(response, Array<BandModel>::class.java).toList()
-                onComplete(list)
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
+                cont.resumeWithException(it)
             }))
     }
 
@@ -61,4 +67,53 @@ class NetworkServiceAdapter constructor(context: Context) {
     private fun putRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
         return  JsonObjectRequest(Request.Method.PUT, BASE_URL+path, body, responseListener, errorListener)
     }
+
+   suspend fun getCollectors() = suspendCoroutine<List<CollectorModel>>{ cont->
+        requestQueue.add(getRequest("collectors",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<CollectorModel>::class.java).toList()
+                cont.resume(list)
+            },
+            Response.ErrorListener {
+                cont.resumeWithException(it)
+            }))
+    }
+
+   suspend fun getCatalogoAlbum() = suspendCoroutine<List<CatalogoAlbumModel>>{ cont->
+        requestQueue.add(getRequest("albums",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<CatalogoAlbumModel>::class.java).toList()
+                cont.resume(list)
+            },
+            Response.ErrorListener {
+                cont.resumeWithException(it)
+            }))
+    }
+
+   suspend fun getColeccionAlbum() = suspendCoroutine<List<ColeccionAlbumModel>>{ cont->
+       requestQueue.add(getRequest("collectors/5/albums",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<ColeccionAlbumModel>::class.java).toList()
+                cont.resume(list)
+            },
+            Response.ErrorListener {
+                cont.resumeWithException(it)
+            }))
+    }
+
+    fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
+            body,
+            Response.Listener<JSONObject> { response ->
+                onComplete(response)
+            },
+            Response.ErrorListener {
+                onError(it)
+            }))
+    }
+
+
 }
