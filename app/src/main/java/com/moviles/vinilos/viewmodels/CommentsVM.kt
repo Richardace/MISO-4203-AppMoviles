@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-class CommentsVM (application: Application) :  AndroidViewModel(application) {
+class CommentsVM (application: Application, val albumId: String) :  AndroidViewModel(application) {
 
     private val _comments = MutableLiveData<List<CommentModel>>()
 
@@ -28,7 +28,7 @@ class CommentsVM (application: Application) :  AndroidViewModel(application) {
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
     val albumRepository = ColeccionAlbumRepository(application)
-    val albumId = "2"
+
 
     init {
         refreshDataFromNetwork(forced = false)
@@ -75,11 +75,11 @@ class CommentsVM (application: Application) :  AndroidViewModel(application) {
         })
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val albumId: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CommentsVM::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CommentsVM(app) as T
+                return CommentsVM(app, albumId) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

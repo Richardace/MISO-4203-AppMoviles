@@ -86,7 +86,7 @@ class CommentsFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application))[CommentsVM::class.java]
+        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application, "2"))[CommentsVM::class.java]
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<CommentModel>> {
             it.apply {
                 viewModelAdapter!!.comments = this
