@@ -53,7 +53,6 @@ class AddAlbumCollectionFragment : Fragment(), tapped{
         return view
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -96,6 +95,5 @@ class AddAlbumCollectionFragment : Fragment(), tapped{
     override fun onItemtapped(catalogo: CatalogoAlbumModel) {
         Log.i("TEST 2: ", catalogo.id.toString())
         viewModel2.saveCollectionAlbum(catalogo.id)
-
     }
 }
