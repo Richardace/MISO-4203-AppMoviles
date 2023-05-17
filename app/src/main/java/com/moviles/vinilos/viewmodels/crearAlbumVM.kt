@@ -111,9 +111,9 @@ class crearAlbumVM(application: Application) : AndroidViewModel(application){
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddArtistVM::class.java)) {
+            if (modelClass.isAssignableFrom(crearAlbumVM::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AddArtistVM(app) as T
+                return crearAlbumVM(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

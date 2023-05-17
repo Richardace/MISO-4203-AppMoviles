@@ -59,7 +59,11 @@
         android:id="@+id/catalogoAlbumFragment"
         android:name="com.moviles.vinilos.ui.CatalogoAlbumFragment"
         android:label="fragment_catalogo_album"
-        tools:layout="@layout/fragment_catalogo_album" />
+        tools:layout="@layout/fragment_catalogo_album" >
+        <action
+            android:id="@+id/action_catalogoAlbumFragment_to_crearAlbumFragment"
+            app:destination="@id/crearAlbumFragment" />
+    </fragment>
     <fragment
         android:id="@+id/catalogoColeccionesAlbumFragment"
         android:name="com.moviles.vinilos.ui.ColeccionesAlbumFragment"
@@ -76,4 +80,8 @@
         android:id="@+id/action_homeFragment_to_collectorAlbumListFragment"
         app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/crearAlbumFragment"
+        android:name="com.moviles.vinilos.ui.CrearAlbumFragment"
+        android:label="CrearAlbumFragment" />
 </navigation>
