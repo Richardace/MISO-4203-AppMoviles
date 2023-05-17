@@ -141,5 +141,16 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    fun sendCommentOnAlbum(jsonObject: JSONObject, idAlbum: String, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        requestQueue.add(postRequest("albums/$idAlbum/comments",
+            jsonObject,
+            { response ->
+                onComplete(response)
+            },
+            {
+                onError(it)
+            }))
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.moviles.vinilos.viewmodels
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +16,7 @@ import com.moviles.vinilos.repository.ColeccionAlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class CommentsVM (application: Application) :  AndroidViewModel(application) {
 
@@ -25,16 +28,17 @@ class CommentsVM (application: Application) :  AndroidViewModel(application) {
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
     val albumRepository = ColeccionAlbumRepository(application)
+    val albumId = "2"
 
     init {
-        refreshDataFromNetwork()
+        refreshDataFromNetwork(forced = false)
     }
 
-    private fun refreshDataFromNetwork() {
+    private fun refreshDataFromNetwork(forced: Boolean) {
         try{
             viewModelScope.launch(Dispatchers.Default) {
                 withContext(Dispatchers.IO) {
-                    var data = albumRepository.getComments(albumId = "2")
+                    var data = albumRepository.getComments(albumId = albumId, forced = forced)
                     _comments.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
@@ -47,6 +51,28 @@ class CommentsVM (application: Application) :  AndroidViewModel(application) {
 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
+    }
+
+    fun sendComment(comment: String) {
+        val jsonObject1 = JSONObject()
+        jsonObject1.put("id", 1)
+        val jsonObject = JSONObject()
+        jsonObject.put("description", comment)
+        jsonObject.put("rating",4)
+        jsonObject.put("collector", jsonObject1)
+        albumRepository.sendComment(idAlbum = albumId,jsonObject, {
+            Toast.makeText(
+                getApplication(),
+                "Comentario enviado con exito",
+                android.widget.Toast.LENGTH_LONG
+            ).show();
+            _eventNetworkError.value = false
+            _isNetworkErrorShown.value = false
+            refreshDataFromNetwork(forced = true)
+        }, {
+            Log.d("ER", it.message.toString());
+            _eventNetworkError.value = true
+        })
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

@@ -65,9 +65,7 @@ class CacheManager(context: Context) {
     }
 
     fun addComments(id: String, data: List<CommentModel>){
-        if(!comments.contains(id)){
             comments[id] = data
-        }
     }
 
 }
