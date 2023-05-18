@@ -70,14 +70,15 @@ tools:context=".ui.VisitorFragment">
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
-    android:id="@+id/imageView"
-    android:layout_width="180dp"
-    android:layout_height="0dp"
-    android:layout_marginTop="18dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/vynils_logo" />
+        android:id="@+id/imageView"
+        android:layout_width="180dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vynils_logo"
+        android:contentDescription="Logo Vynils"/>
 
 <Button
     android:id="@+id/backButton"
