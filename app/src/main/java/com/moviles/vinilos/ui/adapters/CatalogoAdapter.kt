@@ -20,8 +20,6 @@ class CatalogoAdapter(val callback: tapped) : RecyclerView.Adapter<CatalogoViewH
             notifyDataSetChanged()
         }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder  {
         val withDataBinding: AlbumRowBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),

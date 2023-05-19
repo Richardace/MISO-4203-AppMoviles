@@ -4,7 +4,9 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.moviles.vinilos.models.AlbumModel
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.repository.AlbumsRepository
 import com.moviles.vinilos.repository.BandRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,11 +14,11 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 class crearAlbumVM(application: Application) : AndroidViewModel(application){
-    private val _bands = MutableLiveData<List<BandModel>>()
+    private val _albums = MutableLiveData<List<AlbumModel>>()
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-    private val bandRepository = BandRepository(application)
-    private var bandsList = emptyList<BandModel>()
+    private val albumRepository = AlbumsRepository(application)
+    private var albumList = emptyList<AlbumModel>()
 
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
@@ -67,7 +69,7 @@ class crearAlbumVM(application: Application) : AndroidViewModel(application){
         }
 
         if (canCallApi) {
-            bandRepository.createBand(jsonObject, {
+            albumRepository.createAlbum(jsonObject, {
                 Toast.makeText(
                     getApplication(),
                     "Album creado con exito",
@@ -85,7 +87,7 @@ class crearAlbumVM(application: Application) : AndroidViewModel(application){
 
     private fun checkNameCreated(name: String): Boolean {
         var valor = false
-        valor = bandsList.map { it2 -> it2.name }.contains(name)
+        valor = albumList.map { it2 -> it2.name }.contains(name)
 
         return  valor;
     }
@@ -93,12 +95,12 @@ class crearAlbumVM(application: Application) : AndroidViewModel(application){
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
-    private fun refreshDataFromNetwork() {
+   private fun refreshDataFromNetwork() {
         try{
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    var data = bandRepository.getData()
-                    _bands.postValue(data)
+                    var data = albumRepository.getData()
+                    _albums.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
@@ -107,8 +109,6 @@ class crearAlbumVM(application: Application) : AndroidViewModel(application){
             _eventNetworkError.value = true
         }
     }
-
-
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(crearAlbumVM::class.java)) {
