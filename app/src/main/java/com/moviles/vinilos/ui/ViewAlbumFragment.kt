@@ -17,23 +17,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.moviles.vinilos.R
 import com.moviles.vinilos.models.CatalogoAlbumModel
+import com.moviles.vinilos.ui.adapters.BandAdapter
 import com.moviles.vinilos.ui.adapters.CatalogoAdapter
+import com.moviles.vinilos.ui.adapters.tapped
 import com.moviles.vinilos.viewmodels.AddArtistVM
 import com.moviles.vinilos.viewmodels.BandVM
 import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
 import org.w3c.dom.Text
 
-class ViewAlbumFragment : Fragment() {
+class ViewAlbumFragment : Fragment(), tapped {
 
     lateinit var viewModel: CatalogoAlbumVM
     private var viewModelAdapter: CatalogoAdapter? = null
-
+    var albumId = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_view_album, container, false)
         val myButton = view.findViewById<Button>(R.id.SaveArtistbutton)
+        viewModelAdapter = CatalogoAdapter(callback = this)
 
-
-        //Log.i("Prueba llega view album: ", arguments?.getString("albumId").toString())
+        albumId =  arguments?.getString("albumId").toString()
+        Log.i("ALBUMID: ","Prueba llega view album: "+albumId)
 
         val tv = view.findViewById<TextView>(R.id.nameAlbum)
         tv.text = arguments?.getString("albumId").toString()
@@ -59,7 +62,7 @@ class ViewAlbumFragment : Fragment() {
             "You can only access the viewModel after onActivityCreated()"
         }
         viewModel = ViewModelProvider(this, CatalogoAlbumVM.Factory(activity.application))[CatalogoAlbumVM::class.java]
-        viewModel.getAlbum(2)
+        viewModel.getAlbum(albumId.toInt())
         viewModel.catalogo.observe(viewLifecycleOwner, Observer<CatalogoAlbumModel> {
             it.apply {
                 viewModelAdapter!!.catalogo = this
@@ -67,5 +70,9 @@ class ViewAlbumFragment : Fragment() {
         })
 
 
+    }
+
+    override fun onItemtapped(catalogo: CatalogoAlbumModel) {
+        TODO("Not yet implemented")
     }
 }

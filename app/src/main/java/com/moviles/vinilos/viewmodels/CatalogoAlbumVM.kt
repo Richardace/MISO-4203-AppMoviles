@@ -30,7 +30,9 @@ class CatalogoAlbumVM(application: Application) :  AndroidViewModel(application)
         try {
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO){
-
+                    var data = catalogoRepository.getAlbum(iAlbum)
+                    Log.i("A", data.toString())
+                    _catalogo.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
