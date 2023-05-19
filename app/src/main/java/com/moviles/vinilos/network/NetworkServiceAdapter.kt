@@ -104,6 +104,18 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    suspend fun getAlbum(idAlbum: Int) = suspendCoroutine<CatalogoAlbumModel>{ cont->
+        requestQueue.add(getRequest("albums/" + idAlbum,
+            Response.Listener<String> { response ->
+                val album = Gson().fromJson(response, CatalogoAlbumModel::class.java)
+                cont.resume(album)
+            },
+            Response.ErrorListener {
+                cont.resumeWithException(it)
+            }))
+    }
+
+
     fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
         requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
             body,
