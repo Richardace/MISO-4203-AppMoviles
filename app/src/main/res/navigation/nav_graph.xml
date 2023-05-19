@@ -83,5 +83,10 @@
     <fragment
         android:id="@+id/crearAlbumFragment"
         android:name="com.moviles.vinilos.ui.CrearAlbumFragment"
-        android:label="CrearAlbumFragment" />
+        android:label="CrearAlbumFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_collectorAlbumListFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
 </navigation>

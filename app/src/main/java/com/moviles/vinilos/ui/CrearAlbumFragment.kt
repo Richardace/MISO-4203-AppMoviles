@@ -92,7 +92,9 @@ class CrearAlbumFragment : Fragment() {
         val backButton = view.findViewById<Button>(R.id.backButton)
         backButton.setPadding(40, 40, 40, 40)
         backButton.setOnClickListener {
-            view.findNavController().navigateUp()
+
+            val action = CrearAlbumFragmentDirections.actionHomeFragmentToCollectorAlbumListFragment()
+            view.findNavController().navigate(action)
         }
         return view
     }

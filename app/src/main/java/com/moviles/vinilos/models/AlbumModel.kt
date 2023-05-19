@@ -8,5 +8,4 @@ data class AlbumModel (
     val description: String,
     val creationDate: String,
     val recordLabel: String
-
     )
