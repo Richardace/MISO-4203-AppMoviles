@@ -14,6 +14,7 @@ import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.models.CollectorModel
+import com.moviles.vinilos.models.CommentModel
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -119,11 +120,24 @@ class NetworkServiceAdapter constructor(context: Context) {
     fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
         requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
             body,
-            Response.Listener<JSONObject> { response ->
+            { response ->
                 onComplete(response)
             },
-            Response.ErrorListener {
+            {
                 onError(it)
+            }))
+    }
+
+    suspend fun getCommentsOnAlbum(albumId: String) = suspendCoroutine<List<CommentModel>>{ cont->
+        requestQueue.add(getRequest(
+            "albums/$albumId/comments",
+            { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<CommentModel>::class.java).toList()
+                cont.resume(list)
+            },
+            {
+                cont.resumeWithException(it)
             }))
     }
 

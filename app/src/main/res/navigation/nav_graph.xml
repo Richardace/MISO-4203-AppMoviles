@@ -84,5 +84,14 @@
         android:id="@+id/viewAlbumFragment"
         android:name="com.moviles.vinilos.ui.ViewAlbumFragment"
         android:label="fragment_view_album"
-        tools:layout="@layout/fragment_view_album" />
+        tools:layout="@layout/fragment_view_album" >
+        <action
+            android:id="@+id/action_viewAlbumFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.moviles.vinilos.ui.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
 </navigation>
