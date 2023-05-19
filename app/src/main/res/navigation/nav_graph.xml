@@ -81,6 +81,7 @@
         app:destination="@id/homeFragment" />
     </fragment>
     <fragment
+<<<<<<< HEAD
         android:id="@+id/crearAlbumFragment"
         android:name="com.moviles.vinilos.ui.CrearAlbumFragment"
         android:label="CrearAlbumFragment" >
@@ -89,4 +90,10 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+=======
+        android:id="@+id/viewAlbumFragment"
+        android:name="com.moviles.vinilos.ui.ViewAlbumFragment"
+        android:label="fragment_view_album"
+        tools:layout="@layout/fragment_view_album" />
+>>>>>>> develop
 </navigation>
