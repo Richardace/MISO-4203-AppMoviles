@@ -1,29 +1,29 @@
 package com.moviles.vinilos.ui
 
-import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.moviles.vinilos.R
 import com.moviles.vinilos.models.CatalogoAlbumModel
-import com.moviles.vinilos.ui.adapters.BandAdapter
 import com.moviles.vinilos.ui.adapters.CatalogoAdapter
 import com.moviles.vinilos.ui.adapters.tapped
-import com.moviles.vinilos.viewmodels.AddArtistVM
-import com.moviles.vinilos.viewmodels.BandVM
 import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
-import org.w3c.dom.Text
+import com.squareup.picasso.Picasso
+import java.io.IOException
+import java.io.InputStream
+import java.net.MalformedURLException
+import java.net.URL
+
 
 class ViewAlbumFragment : Fragment(), tapped {
 
@@ -36,17 +36,6 @@ class ViewAlbumFragment : Fragment(), tapped {
         viewModelAdapter = CatalogoAdapter(callback = this)
 
         albumId =  arguments?.getString("albumId").toString()
-        Log.i("ALBUMID: ","Prueba llega view album: "+albumId)
-
-        val tv = view.findViewById<TextView>(R.id.nameAlbum)
-        tv.text = arguments?.getString("albumId").toString()
-
-
-        val name = view.findViewById<EditText>(R.id.nombreArtista)
-        val image = view.findViewById<EditText>(R.id.imagenArtista)
-        val description = view.findViewById<EditText>(R.id.descripcionArtista)
-        val birthdate = view.findViewById<EditText>(R.id.birthDateArtista)
-
 
         val backButton = view.findViewById<Button>(R.id.backButton)
         backButton.setPadding(40, 40, 40, 40)
@@ -66,6 +55,37 @@ class ViewAlbumFragment : Fragment(), tapped {
         viewModel.catalogo.observe(viewLifecycleOwner, Observer<CatalogoAlbumModel> {
             it.apply {
                 viewModelAdapter!!.catalogo = this
+
+                val textNameAlbum = view?.findViewById<TextView>(R.id.nameAlbum)
+                textNameAlbum?.setText(this.name)
+
+                val textFecha = view?.findViewById<TextView>(R.id.fecha)
+                textFecha?.setText(this.releaseDate)
+
+                val textGenero = view?.findViewById<TextView>(R.id.genero)
+                textGenero?.setText(this.genre)
+
+                val textSello = view?.findViewById<TextView>(R.id.sello)
+                textSello?.setText(this.recordLabel)
+
+                val textDescripcion = view?.findViewById<TextView>(R.id.descripcion)
+                textDescripcion?.setText(this.description)
+
+                val imagenAlbum = view?.findViewById<ImageView>(R.id.imagenAlbum)
+
+                Picasso.get()
+                    .load(this.cover)
+                    .error(R.mipmap.ic_launcher_round)
+                    .resize(600, 600)
+                    .into(imagenAlbum)
+
+                Log.i("Prueba name: ", this.name)
+                Log.i("Prueba cover: ", this.cover)
+                Log.i("Prueba releaseDate: ", this.releaseDate)
+                Log.i("Prueba description: ", this.description)
+                Log.i("Prueba genre: ", this.genre)
+                Log.i("Prueba recordLabel: ", this.recordLabel)
+
             }
         })
 
