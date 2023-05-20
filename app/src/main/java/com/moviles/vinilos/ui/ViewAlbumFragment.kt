@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,17 +27,20 @@ import java.net.URL
 
 
 class ViewAlbumFragment : Fragment(), tapped {
-
     lateinit var viewModel: CatalogoAlbumVM
     private var viewModelAdapter: CatalogoAdapter? = null
     var albumId = ""
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_view_album, container, false)
-        val myButton = view.findViewById<Button>(R.id.SaveArtistbutton)
+        val showCommentsButton = view.findViewById<Button>(R.id.showComments)
+        showCommentsButton.setOnClickListener {
+            val textNameAlbum = view?.findViewById<TextView>(R.id.nameAlbum)
+            val action = ViewAlbumFragmentDirections.actionViewAlbumFragmentToCommentsFragment(albumId = albumId, albumName = textNameAlbum?.text.toString())
+            view.findNavController().navigate(action)
+        };
         viewModelAdapter = CatalogoAdapter(callback = this)
-
         albumId =  arguments?.getString("albumId").toString()
-
         val backButton = view.findViewById<Button>(R.id.backButton)
         backButton.setPadding(40, 40, 40, 40)
         backButton.setOnClickListener {
