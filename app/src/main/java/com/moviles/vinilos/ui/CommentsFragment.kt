@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
@@ -22,8 +24,11 @@ import com.moviles.vinilos.ui.adapters.BandAdapter
 import com.moviles.vinilos.ui.adapters.CommentAdapter
 import com.moviles.vinilos.viewmodels.BandVM
 import com.moviles.vinilos.viewmodels.CommentsVM
+import org.w3c.dom.Text
 
 class CommentsFragment : Fragment() {
+    private var albumId: String = ""
+    private var albumName: String = ""
     private var _binding: FragmentCommentsBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -32,6 +37,9 @@ class CommentsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val arguments = requireArguments()
+        albumId = arguments.getString("albumId").toString()
+        albumName= arguments.getString("albumName").toString()
     }
 
     override fun onCreateView(
@@ -45,6 +53,8 @@ class CommentsFragment : Fragment() {
         myButton.setOnClickListener {
             view.findNavController().navigateUp()
         }
+        val title = view.findViewById<TextView>(R.id.albumNameComments)
+        title.text = "Comentarios de $albumName"
         val sendCommentButton = view.findViewById<Button>(R.id.sendCommentButton)
         sendCommentButton.setOnClickListener {
             sendComment()
@@ -63,6 +73,7 @@ class CommentsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
@@ -86,7 +97,7 @@ class CommentsFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application, "2"))[CommentsVM::class.java]
+        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application, albumId))[CommentsVM::class.java]
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<CommentModel>> {
             it.apply {
                 viewModelAdapter!!.comments = this

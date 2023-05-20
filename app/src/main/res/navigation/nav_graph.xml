@@ -93,5 +93,11 @@
         android:id="@+id/commentsFragment"
         android:name="com.moviles.vinilos.ui.CommentsFragment"
         android:label="fragment_comments"
-        tools:layout="@layout/fragment_comments" />
+        tools:layout="@layout/fragment_comments" >
+        <argument
+            android:name="albumId"
+            app:argType="string" />
+        <argument android:name="albumName"
+            app:argType="string" />
+    </fragment>
 </navigation>
