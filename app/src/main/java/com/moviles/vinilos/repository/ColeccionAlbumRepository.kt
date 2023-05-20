@@ -35,9 +35,9 @@ class ColeccionAlbumRepository (val application: Application){
         )
     }
 
-    suspend fun getComments(albumId: String) : List<CommentModel> {
+    suspend fun getComments(albumId: String, forced: Boolean) : List<CommentModel> {
         var potentialResp = CacheManager.getInstance(application.applicationContext).getComments(id = albumId)
-        if(potentialResp.isEmpty()){
+        if(potentialResp.isEmpty() || forced){
             Log.d("Cache decision", "get from network")
             var data = NetworkServiceAdapter.getInstance(application).getCommentsOnAlbum(albumId = albumId)
             CacheManager.getInstance(application.applicationContext).addComments(id = albumId, data = data)
@@ -47,5 +47,14 @@ class ColeccionAlbumRepository (val application: Application){
             Log.d("Cache decision", "return ${potentialResp.size} elements from cache")
             return potentialResp
         }
+    }
+
+    fun sendComment(idAlbum: String, jsonObject: JSONObject,callback: (JSONObject)->Unit, onError: (VolleyError)->Unit) {
+        NetworkServiceAdapter.getInstance(application).sendCommentOnAlbum(jsonObject, idAlbum,{
+            Log.d("REPO2", it.toString())
+            callback(it)
+        },
+            onError
+        )
     }
 }

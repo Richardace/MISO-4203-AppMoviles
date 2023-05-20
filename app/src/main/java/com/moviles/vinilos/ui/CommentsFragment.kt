@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -44,7 +45,21 @@ class CommentsFragment : Fragment() {
         myButton.setOnClickListener {
             view.findNavController().navigateUp()
         }
+        val sendCommentButton = view.findViewById<Button>(R.id.sendCommentButton)
+        sendCommentButton.setOnClickListener {
+            sendComment()
+        }
         return view
+    }
+
+    private fun sendComment() {
+        val commentEditText = view?.findViewById<EditText>(R.id.commentEditText)
+        if(commentEditText?.text?.isNotEmpty()!!) {
+            viewModel.sendComment(comment = commentEditText.text.toString())
+            commentEditText.setText("")
+        } else {
+            Toast.makeText(activity, "Debes introducir tu comentario", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
