@@ -23,4 +23,9 @@ class CatalogoRepository (val application: Application){
             return potentialResp
         }
     }
+
+    suspend fun getAlbum(idAlbum: Int): CatalogoAlbumModel {
+        var albumMusical = NetworkServiceAdapter.getInstance(application).getAlbum(idAlbum)
+        return albumMusical
+    }
 }
