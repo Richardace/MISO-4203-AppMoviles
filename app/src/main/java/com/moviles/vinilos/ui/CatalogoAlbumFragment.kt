@@ -43,10 +43,8 @@ class CatalogoAlbumFragment : Fragment(), tapped {
         viewModelAdapter = CatalogoAdapter(callback = this)
         val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)
         addArtistButton.setOnClickListener {
-            addArtistButton.setOnClickListener{
                 val action = CatalogoAlbumFragmentDirections.actionCatalogoAlbumFragmentToCrearAlbumFragment()
                 view.findNavController().navigate(action)
-            }
         }
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {

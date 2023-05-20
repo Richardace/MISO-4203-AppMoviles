@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/albumNameComments"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
@@ -26,6 +26,7 @@
         android:layout_width="180dp"
         android:layout_height="0dp"
         android:layout_marginTop="18dp"
+        android:contentDescription="Logo Vynils"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,26 +35,26 @@
     <Button
         android:id="@+id/backButton"
         style="@style/CommonButtonStyle"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/arrow_left"
+        android:contentDescription="Atras"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/band_recycler_view"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -66,28 +67,36 @@
 
     <EditText
         android:id="@+id/commentEditText"
-        android:layout_width="268dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Escriba un comentario"
         android:inputType="textMultiLine"
+        android:maxWidth="268dp"
+        android:textColorHint="#AA6361"
+        android:textSize="20sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendCommentButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/sendCommentButton"
         style="@style/CommonButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/common_action_button"
         android:text="Enviar"
-        app:layout_constraintBottom_toBottomOf="@+id/commentEditText"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/commentEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
