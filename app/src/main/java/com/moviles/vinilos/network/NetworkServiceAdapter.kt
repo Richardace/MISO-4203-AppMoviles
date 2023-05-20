@@ -127,6 +127,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     fun createAlbum(body: JSONObject,  onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        Log.d("A", body.toString())
         requestQueue.add(postRequest("albums",
             body,
             Response.Listener<JSONObject> { response ->
