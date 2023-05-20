@@ -21,6 +21,8 @@ class CollectorRepository (val application: Application){
            Log.d("Cache decision", "return ${potentialResp.size} elements from cache")
            return potentialResp
        }
+   }
 
-    }
+
+
 }

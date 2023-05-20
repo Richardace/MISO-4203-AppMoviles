@@ -10,10 +10,12 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.moviles.vinilos.models.AlbumModel
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.models.CollectorModel
+import com.moviles.vinilos.models.CommentModel
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -105,7 +107,16 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
-        requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
+        requestQueue.add(postRequest("collectors/5/albums/" + idAlbum, body, { response ->
+                onComplete(response)
+            },{
+                onError(it)
+            }))
+    }
+
+    fun createAlbum(body: JSONObject,  onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        Log.d("A", body.toString())
+        requestQueue.add(postRequest("albums",
             body,
             Response.Listener<JSONObject> { response ->
                 onComplete(response)
@@ -116,4 +127,38 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
 
+    suspend fun getAlbum() = suspendCoroutine<List<AlbumModel>>{ cont ->
+        requestQueue.add(getRequest("albums",
+            Response.Listener<String> { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<AlbumModel>::class.java).toList()
+                cont.resume(list)
+            },
+            Response.ErrorListener {
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getCommentsOnAlbum(albumId: String) = suspendCoroutine<List<CommentModel>>{ cont->
+        requestQueue.add(getRequest(
+            "albums/$albumId/comments",
+            { response ->
+                val resp = JSONArray(response)
+                val list = Gson().fromJson(response, Array<CommentModel>::class.java).toList()
+                cont.resume(list)
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+    fun sendCommentOnAlbum(jsonObject: JSONObject, idAlbum: String, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
+        requestQueue.add(postRequest("albums/$idAlbum/comments",
+            jsonObject,
+            { response ->
+                onComplete(response)
+            },
+            {
+                onError(it)
+            }))
+    }
 }

@@ -6,53 +6,74 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
-import com.moviles.vinilos.databinding.FragmentCatalogoAlbumBinding
-import com.moviles.vinilos.databinding.FragmentCollectorListBinding
-import com.moviles.vinilos.models.CatalogoAlbumModel
-import com.moviles.vinilos.ui.adapters.CatalogoAdapter
-import com.moviles.vinilos.ui.adapters.tapped
-import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
+import com.moviles.vinilos.databinding.FragmentBandListBinding
+import com.moviles.vinilos.databinding.FragmentCommentsBinding
+import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CommentModel
+import com.moviles.vinilos.ui.adapters.BandAdapter
+import com.moviles.vinilos.ui.adapters.CommentAdapter
+import com.moviles.vinilos.viewmodels.BandVM
+import com.moviles.vinilos.viewmodels.CommentsVM
+import org.w3c.dom.Text
 
-
-
-class CatalogoAlbumFragment : Fragment(), tapped {
-    private var _binding: FragmentCatalogoAlbumBinding? = null
+class CommentsFragment : Fragment() {
+    private var albumId: String = ""
+    private var albumName: String = ""
+    private var _binding: FragmentCommentsBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: CatalogoAlbumVM
-    private var viewModelAdapter: CatalogoAdapter? = null
+    private lateinit var viewModel: CommentsVM
+    private var viewModelAdapter: CommentAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val arguments = requireArguments()
+        albumId = arguments.getString("albumId").toString()
+        albumName= arguments.getString("albumName").toString()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCatalogoAlbumBinding.inflate(inflater, container, false)
+        _binding = FragmentCommentsBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = CatalogoAdapter(callback = this)
-        val addArtistButton = view.findViewById<Button>(R.id.addartistbutton)
-        addArtistButton.setOnClickListener {
-                val action = CatalogoAlbumFragmentDirections.actionCatalogoAlbumFragmentToCrearAlbumFragment()
-                view.findNavController().navigate(action)
-        }
+        viewModelAdapter = CommentAdapter()
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {
             view.findNavController().navigateUp()
         }
+        val title = view.findViewById<TextView>(R.id.albumNameComments)
+        title.text = "Comentarios de $albumName"
+        val sendCommentButton = view.findViewById<Button>(R.id.sendCommentButton)
+        sendCommentButton.setOnClickListener {
+            sendComment()
+        }
         return view
     }
 
+    private fun sendComment() {
+        val commentEditText = view?.findViewById<EditText>(R.id.commentEditText)
+        if(commentEditText?.text?.isNotEmpty()!!) {
+            viewModel.sendComment(comment = commentEditText.text.toString())
+            commentEditText.setText("")
+        } else {
+            Toast.makeText(activity, "Debes introducir tu comentario", Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
@@ -76,18 +97,15 @@ class CatalogoAlbumFragment : Fragment(), tapped {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, CatalogoAlbumVM.Factory(activity.application))[CatalogoAlbumVM::class.java]
-        viewModel.catalogos.observe(viewLifecycleOwner, Observer<List<CatalogoAlbumModel>> {
+        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application, albumId))[CommentsVM::class.java]
+        viewModel.comments.observe(viewLifecycleOwner, Observer<List<CommentModel>> {
             it.apply {
-                viewModelAdapter!!.catalogos = this
+                viewModelAdapter!!.comments = this
             }
         })
 
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
             if (isNetworkError) onNetworkError()
         })
-    }
-
-    override fun onItemtapped(catalogo: CatalogoAlbumModel) {
     }
 }

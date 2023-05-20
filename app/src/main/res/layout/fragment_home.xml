@@ -27,6 +27,7 @@ tools:context=".ui.HomeFragment">
     android:layout_marginTop="80dp"
     android:layout_marginEnd="56dp"
     android:text="Visitante"
+    app:autoSizeTextType="uniform"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +41,7 @@ tools:context=".ui.HomeFragment">
     android:layout_marginTop="56dp"
     android:layout_marginEnd="56dp"
     android:text="Coleccionista"
+    app:autoSizeTextType="uniform"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.497"
     app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +55,7 @@ tools:context=".ui.HomeFragment">
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/vynils_logo" />
+    app:srcCompat="@drawable/vynils_logo"
+    android:contentDescription="Logo Vynils"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

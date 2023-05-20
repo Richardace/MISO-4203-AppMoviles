@@ -19,7 +19,8 @@
             android:layout_height="60dp"
             android:background="@drawable/rounded_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="Imagen por defecto"/>
 
         <TextView
             android:id="@+id/albumTitle"
