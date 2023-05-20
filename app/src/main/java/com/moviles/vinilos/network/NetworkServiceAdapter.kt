@@ -14,7 +14,6 @@ import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.models.CollectorModel
-import com.moviles.vinilos.models.CommentModel
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -105,49 +104,13 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    suspend fun getAlbum(idAlbum: Int) = suspendCoroutine<CatalogoAlbumModel>{ cont->
-        requestQueue.add(getRequest("albums/" + idAlbum,
-            Response.Listener<String> { response ->
-                val album = Gson().fromJson(response, CatalogoAlbumModel::class.java)
-                cont.resume(album)
-            },
-            Response.ErrorListener {
-                cont.resumeWithException(it)
-            }))
-    }
-
-
     fun createAlbumCollecion(body: JSONObject,  idAlbum: Int, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
         requestQueue.add(postRequest("collectors/5/albums/" + idAlbum,
             body,
-            { response ->
+            Response.Listener<JSONObject> { response ->
                 onComplete(response)
             },
-            {
-                onError(it)
-            }))
-    }
-
-    suspend fun getCommentsOnAlbum(albumId: String) = suspendCoroutine<List<CommentModel>>{ cont->
-        requestQueue.add(getRequest(
-            "albums/$albumId/comments",
-            { response ->
-                val resp = JSONArray(response)
-                val list = Gson().fromJson(response, Array<CommentModel>::class.java).toList()
-                cont.resume(list)
-            },
-            {
-                cont.resumeWithException(it)
-            }))
-    }
-
-    fun sendCommentOnAlbum(jsonObject: JSONObject, idAlbum: String, onComplete:(resp:JSONObject)->Unit , onError: (error:VolleyError)->Unit){
-        requestQueue.add(postRequest("albums/$idAlbum/comments",
-            jsonObject,
-            { response ->
-                onComplete(response)
-            },
-            {
+            Response.ErrorListener {
                 onError(it)
             }))
     }

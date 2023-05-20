@@ -5,7 +5,6 @@ import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.models.ColeccionAlbumModel
 import com.moviles.vinilos.models.CollectorModel
-import com.moviles.vinilos.models.CommentModel
 
 class CacheManager(context: Context) {
     companion object{
@@ -21,8 +20,6 @@ class CacheManager(context: Context) {
     private var collectors: HashMap<String, List<CollectorModel>> = hashMapOf()
     private var catalogoAlbums: HashMap<String, List<CatalogoAlbumModel>> = hashMapOf()
     private var coleccionAlbum: HashMap<String, List<ColeccionAlbumModel>> = hashMapOf()
-    private var comments: HashMap<String, List<CommentModel>> = hashMapOf()
-
     fun addBands(nameList: String, band: List<BandModel>){
         if (!bands.containsKey(nameList)){
             bands[nameList] = band
@@ -58,14 +55,6 @@ class CacheManager(context: Context) {
     }
     fun getColeccionAlbum(nameList: String): List<ColeccionAlbumModel>{
         return if (coleccionAlbum.containsKey(nameList)) coleccionAlbum[nameList]!! else listOf<ColeccionAlbumModel>()
-    }
-
-    fun getComments(id: String): List<CommentModel>{
-        return if (comments.containsKey(id)) comments[id]!! else listOf<CommentModel>()
-    }
-
-    fun addComments(id: String, data: List<CommentModel>){
-            comments[id] = data
     }
 
 }
