@@ -45,7 +45,6 @@ class ColeccionesAlbumFragment : Fragment() {
         addAlbumColeccion.setOnClickListener {
             val action = ColeccionesAlbumFragmentDirections.fragmentAddAlbum()
             view.findNavController().navigate(action)
-
         }
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {
@@ -58,6 +57,7 @@ class ColeccionesAlbumFragment : Fragment() {
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
     }
 
     override fun onDestroyView() {

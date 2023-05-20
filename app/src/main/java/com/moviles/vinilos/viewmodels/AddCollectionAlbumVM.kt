@@ -24,6 +24,7 @@ class AddCollectionAlbumVM(application: Application) : AndroidViewModel(applicat
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
 
+
     init {
         refreshDataFromNetwork()
     }
