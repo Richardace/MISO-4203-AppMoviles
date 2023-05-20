@@ -13,22 +13,21 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.vinilos.R
-import com.moviles.vinilos.databinding.FragmentCatalogoAlbumBinding
-import com.moviles.vinilos.databinding.FragmentCollectorAlbumListBinding
-import com.moviles.vinilos.models.CatalogoAlbumModel
-import com.moviles.vinilos.models.ColeccionAlbumModel
-import com.moviles.vinilos.ui.adapters.CatalogoAdapter
-import com.moviles.vinilos.ui.adapters.CollectorAlbumAdapter
-import com.moviles.vinilos.viewmodels.CatalogoAlbumVM
-import com.moviles.vinilos.viewmodels.CollectorAlbumVM
+import com.moviles.vinilos.databinding.FragmentBandListBinding
+import com.moviles.vinilos.databinding.FragmentCommentsBinding
+import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.models.CommentModel
+import com.moviles.vinilos.ui.adapters.BandAdapter
+import com.moviles.vinilos.ui.adapters.CommentAdapter
+import com.moviles.vinilos.viewmodels.BandVM
+import com.moviles.vinilos.viewmodels.CommentsVM
 
-
-class ColeccionesAlbumFragment : Fragment() {
-    private var _binding: FragmentCollectorAlbumListBinding? = null
+class CommentsFragment : Fragment() {
+    private var _binding: FragmentCommentsBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: CollectorAlbumVM
-    private var viewModelAdapter: CollectorAlbumAdapter? = null
+    private lateinit var viewModel: CommentsVM
+    private var viewModelAdapter: CommentAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +37,9 @@ class ColeccionesAlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCollectorAlbumListBinding.inflate(inflater, container, false)
+        _binding = FragmentCommentsBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = CollectorAlbumAdapter()
-        val addAlbumColeccion = view.findViewById<Button>(R.id.addalbumcoleccion)
-        addAlbumColeccion.setOnClickListener {
-            val action = ColeccionesAlbumFragmentDirections.fragmentAddAlbum()
-            view.findNavController().navigate(action)
-
-        }
+        viewModelAdapter = CommentAdapter()
         val myButton = view.findViewById<Button>(R.id.backButton)
         myButton.setOnClickListener {
             view.findNavController().navigateUp()
@@ -58,6 +51,7 @@ class ColeccionesAlbumFragment : Fragment() {
         recyclerView = binding.bandRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
     }
 
     override fun onDestroyView() {
@@ -77,10 +71,10 @@ class ColeccionesAlbumFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        viewModel = ViewModelProvider(this, CollectorAlbumVM.Factory(activity.application))[CollectorAlbumVM::class.java]
-        viewModel.catalogos.observe(viewLifecycleOwner, Observer<List<ColeccionAlbumModel>> {
+        viewModel = ViewModelProvider(this, CommentsVM.Factory(activity.application))[CommentsVM::class.java]
+        viewModel.comments.observe(viewLifecycleOwner, Observer<List<CommentModel>> {
             it.apply {
-                viewModelAdapter!!.catalogos = this
+                viewModelAdapter!!.comments = this
             }
         })
 

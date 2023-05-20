@@ -5,6 +5,7 @@ import com.android.volley.VolleyError
 import com.moviles.vinilos.models.BandModel
 import com.moviles.vinilos.models.CatalogoAlbumModel
 import com.moviles.vinilos.models.ColeccionAlbumModel
+import com.moviles.vinilos.models.CommentModel
 import com.moviles.vinilos.network.CacheManager
 import com.moviles.vinilos.network.NetworkServiceAdapter
 import org.json.JSONObject
@@ -32,5 +33,19 @@ class ColeccionAlbumRepository (val application: Application){
         },
             onError
         )
+    }
+
+    suspend fun getComments(albumId: String) : List<CommentModel> {
+        var potentialResp = CacheManager.getInstance(application.applicationContext).getComments(id = albumId)
+        if(potentialResp.isEmpty()){
+            Log.d("Cache decision", "get from network")
+            var data = NetworkServiceAdapter.getInstance(application).getCommentsOnAlbum(albumId = albumId)
+            CacheManager.getInstance(application.applicationContext).addComments(id = albumId, data = data)
+            return data
+        }
+        else{
+            Log.d("Cache decision", "return ${potentialResp.size} elements from cache")
+            return potentialResp
+        }
     }
 }
