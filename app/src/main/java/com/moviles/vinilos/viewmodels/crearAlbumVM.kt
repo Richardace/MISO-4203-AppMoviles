@@ -4,59 +4,64 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.moviles.vinilos.models.AlbumModel
 import com.moviles.vinilos.models.BandModel
+import com.moviles.vinilos.repository.AlbumsRepository
 import com.moviles.vinilos.repository.BandRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-class AddArtistVM(application: Application) : AndroidViewModel(application) {
-    private val _bands = MutableLiveData<List<BandModel>>()
+class crearAlbumVM(application: Application) : AndroidViewModel(application){
+    private val _albums = MutableLiveData<List<AlbumModel>>()
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
-    private val bandRepository = BandRepository(application)
-    private var bandsList = emptyList<BandModel>()
+    private val albumRepository = AlbumsRepository(application)
+    private var albumList = emptyList<AlbumModel>()
 
-    val bands: LiveData<List<BandModel>> get() = _bands
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     val isNetworkErrorShown: LiveData<Boolean> get() = _isNetworkErrorShown
-    val nameLD = MutableLiveData<String>();
-    val imageLD = MutableLiveData<String>();
-    val descriptionLD = MutableLiveData<String>();
-    val birthdateLD = MutableLiveData<String>();
-
+    val name = MutableLiveData<String>();
+    val cover = MutableLiveData<String>();
+    val releaseDate = MutableLiveData<String>();
+    val description = MutableLiveData<String>();
+    val genre = MutableLiveData<String>();
+    val recordLabel = MutableLiveData<String>();
 
     init {
         refreshDataFromNetwork()
     }
 
-    fun saveArtistOnApi() {
-
+    fun saveAlbumOnApi() {
         var canCallApi = false
         val jsonObject = JSONObject()
-        jsonObject.put("name", nameLD.value)
-        jsonObject.put("image", imageLD.value)
-        jsonObject.put("description", descriptionLD.value)
-        jsonObject.put("birthDate", birthdateLD.value)
+        jsonObject.put("name", name.value)
+        jsonObject.put("cover", cover.value)
+        jsonObject.put("releaseDate", releaseDate.value)
+        jsonObject.put("description", description.value)
+        jsonObject.put("genre", genre.value)
+        jsonObject.put("recordLabel", recordLabel.value)
 
-
-        if (nameLD.value?.isEmpty() != false) {
+        if (name.value?.isEmpty() != false) {
             Toast.makeText(getApplication(), "Campo Nombre vacío", Toast.LENGTH_LONG).show();
-        } else if (checkNameCreated(nameLD.value ?: "")) {
-            Toast.makeText(getApplication(), "El artista ya existe", Toast.LENGTH_LONG).show();
-        } else if (imageLD.value?.isEmpty() != false) {
+        } else if (checkNameCreated(name.value ?: "")) {
+            Toast.makeText(getApplication(), "El Album ya existe", Toast.LENGTH_LONG).show();
+        } else if (cover.value?.isEmpty() != false) {
             Toast.makeText(getApplication(), "Campo imagen vacío", Toast.LENGTH_LONG).show();
-        } else if (descriptionLD.value?.isEmpty() != false) {
+        } else if (releaseDate.value?.isEmpty() != false) {
+            Toast.makeText(getApplication(),"Campo fecha de lazamiento vacío",android.widget.Toast.LENGTH_LONG
+            ).show();
+        } else if (description.value?.isEmpty() != false) {
             Toast.makeText(
                 getApplication(),
-                "Campo descripción vacío",
+                "Campo descripción vacio",
                 android.widget.Toast.LENGTH_LONG
             ).show();
-        } else if (birthdateLD.value?.isEmpty() != false) {
+        }else if (recordLabel.value?.isEmpty() != false) {
             Toast.makeText(
                 getApplication(),
-                "Campo fecha de nacimiento vacío",
+                "Campo sello discografico vacio",
                 android.widget.Toast.LENGTH_LONG
             ).show();
         } else {
@@ -64,10 +69,10 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
         }
 
         if (canCallApi) {
-            bandRepository.createBand(jsonObject, {
+            albumRepository.createAlbum(jsonObject, {
                 Toast.makeText(
                     getApplication(),
-                    "Artista creado con exito",
+                    "Album creado con exito",
                     android.widget.Toast.LENGTH_LONG
                 ).show();
                 _eventNetworkError.value = false
@@ -82,7 +87,7 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
 
     private fun checkNameCreated(name: String): Boolean {
         var valor = false
-        valor = bandsList.map { it2 -> it2.name }.contains(name)
+        valor = albumList.map { it2 -> it2.name }.contains(name)
 
         return  valor;
     }
@@ -90,13 +95,12 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
-
-    private fun refreshDataFromNetwork() {
+   private fun refreshDataFromNetwork() {
         try{
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    var data = bandRepository.getData()
-                    _bands.postValue(data)
+                    var data = albumRepository.getData()
+                    _albums.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
@@ -105,14 +109,15 @@ class AddArtistVM(application: Application) : AndroidViewModel(application) {
             _eventNetworkError.value = true
         }
     }
-
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddArtistVM::class.java)) {
+            if (modelClass.isAssignableFrom(crearAlbumVM::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AddArtistVM(app) as T
+                return crearAlbumVM(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
+
+
 }
