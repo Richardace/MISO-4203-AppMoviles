@@ -137,8 +137,6 @@ class NetworkServiceAdapter constructor(context: Context) {
                 onError(it)
             }))
     }
-
-
     suspend fun getAlbum() = suspendCoroutine<List<AlbumModel>>{ cont ->
         requestQueue.add(getRequest("albums",
             Response.Listener<String> { response ->
