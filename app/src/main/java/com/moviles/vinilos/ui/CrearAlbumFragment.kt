@@ -3,12 +3,17 @@ package com.moviles.vinilos.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.moviles.vinilos.R
@@ -26,8 +31,6 @@ class CrearAlbumFragment : Fragment() {
         val cover = view.findViewById<EditText>(R.id.cover)
         val description = view.findViewById<EditText>(R.id.descripcionAlbum)
         val releaseDate = view.findViewById<EditText>(R.id.fechaLazamiento)
-        val genre = view.findViewById<EditText>(R.id.genero)
-        val recordLabel = view.findViewById<EditText>(R.id.selloDiscografico)
 
         name.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable) {
@@ -69,22 +72,6 @@ class CrearAlbumFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         });
 
-        genre.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(s: Editable) {
-                viewModel.genre.value = s.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        });
-
-        recordLabel.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(s: Editable) {
-                viewModel.recordLabel.value = s.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        });
-
         myButton.setOnClickListener {
             viewModel.saveAlbumOnApi()
         }
@@ -96,6 +83,44 @@ class CrearAlbumFragment : Fragment() {
             val action = CrearAlbumFragmentDirections.actionHomeFragmentToCollectorAlbumListFragment()
             view.findNavController().navigate(action)
         }
+
+        val spinner = view.findViewById<Spinner>(R.id.spinnerGenero)
+        val genres = arrayOf("Classical", "Salsa", "Rock", "Folk")
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter(view.context,
+                android.R.layout.simple_spinner_item, genres)
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    viewModel.genre.value = genres[position].toString()
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                }
+            }
+        }
+
+        val spinnerLabel = view.findViewById<Spinner>(R.id.spinnerLabel)
+        val labels = arrayOf("Sony Music", "EMI", "Discos Fuentes", "Elektra", "Fania Records")
+
+        if (spinnerLabel != null) {
+            val adapter = ArrayAdapter(view.context,
+                android.R.layout.simple_spinner_item, labels)
+            spinnerLabel.adapter = adapter
+            spinnerLabel.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    viewModel.recordLabel.value = labels[position].toString()
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                }
+            }
+        }
+
         return view
     }
 
